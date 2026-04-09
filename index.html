@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Buscador de Eventos — Open Library</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f7f4ef;
-      --bg-card: #ffffff;
-      --text-primary: #1a1714;
-      --text-secondary: #6b6560;
-      --text-muted: #a09a93;
-      --accent: #c4602a;
-      --accent-light: #f5ede6;
-      --border: #e3ddd6;
-      --border-hover: #c9c2b8;
-      --radius: 14px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.07);
+      --bg: #0d1117;
+      --bg-card: #131920;
+      --bg-card2: #1a2330;
+      --text-primary: #e8f4f0;
+      --text-secondary: #7fa99a;
+      --text-muted: #4a6b60;
+      --accent: #00d4aa;
+      --accent2: #005c49;
+      --accent-glow: rgba(0, 212, 170, 0.15);
+      --border: #1e2e28;
+      --border-hover: rgba(0, 212, 170, 0.27);
+      --radius: 12px;
     }
 
     body {
@@ -30,17 +31,31 @@
       min-height: 100vh;
     }
 
-    /* ── HEADER ── */
+    /* HEADER */
     header {
-      background: var(--text-primary);
-      color: #f7f4ef;
+      background: linear-gradient(160deg, #0d1c17 0%, #0d1117 60%);
       padding: 2.5rem 2rem 2rem;
       text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
     }
 
-    header .eyebrow {
+    header::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 200px;
+      background: radial-gradient(ellipse, rgba(0,212,170,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
       font-size: 11px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 10px;
@@ -48,42 +63,45 @@
     }
 
     header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 5vw, 46px);
-      font-weight: 600;
-      line-height: 1.15;
+      font-size: clamp(26px, 5vw, 44px);
+      font-weight: 700;
+      line-height: 1.1;
       margin-bottom: 10px;
-      color: #f7f4ef;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
     }
+
+    header h1 span { color: var(--accent); }
 
     header p {
-      font-size: 15px;
-      color: #a09a93;
-      font-weight: 300;
-      max-width: 480px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 440px;
       margin: 0 auto;
+      font-weight: 300;
     }
 
-    /* ── SEARCH ── */
+    /* SEARCH */
     .search-section {
-      background: var(--text-primary);
-      padding: 0 2rem 2.5rem;
+      background: #0d1c17;
+      padding: 0 2rem 2rem;
+      border-bottom: 1px solid var(--border);
     }
 
     .search-wrap {
-      max-width: 680px;
+      max-width: 660px;
       margin: 0 auto;
       display: flex;
-      gap: 0;
-      border: 1.5px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      background: rgba(255,255,255,0.05);
-      transition: border-color 0.2s;
+      background: var(--bg-card);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .search-wrap:focus-within {
       border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
     #searchInput {
@@ -91,21 +109,21 @@
       background: transparent;
       border: none;
       outline: none;
-      padding: 14px 18px;
-      font-size: 15px;
+      padding: 13px 18px;
+      font-size: 14.5px;
       font-family: 'DM Sans', sans-serif;
-      color: #f7f4ef;
+      color: var(--text-primary);
     }
 
-    #searchInput::placeholder { color: #6b6560; }
+    #searchInput::placeholder { color: var(--text-muted); }
 
     #searchBtn {
-      padding: 14px 24px;
+      padding: 13px 24px;
       background: var(--accent);
       border: none;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
+      color: #0d1117;
+      font-size: 13.5px;
+      font-weight: 600;
       font-family: 'DM Sans', sans-serif;
       cursor: pointer;
       transition: background 0.15s, opacity 0.15s;
@@ -113,87 +131,86 @@
       white-space: nowrap;
     }
 
-    #searchBtn:hover { background: #b3561f; }
+    #searchBtn:hover { background: #00f0c0; }
     #searchBtn:active { opacity: 0.85; }
-    #searchBtn:disabled { opacity: 0.45; cursor: not-allowed; }
+    #searchBtn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* ── QUICK TAGS ── */
+    /* TAGS */
     .tags-row {
-      max-width: 680px;
-      margin: 14px auto 0;
+      max-width: 660px;
+      margin: 12px auto 0;
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 7px;
     }
 
     .tag {
-      font-size: 12px;
-      padding: 5px 14px;
+      font-size: 11.5px;
+      padding: 4px 13px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.15);
-      color: #a09a93;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
       cursor: pointer;
       transition: all 0.15s;
-      font-family: 'DM Sans', sans-serif;
       background: transparent;
+      font-family: 'DM Sans', sans-serif;
     }
 
     .tag:hover {
       border-color: var(--accent);
       color: var(--accent);
+      background: var(--accent-glow);
     }
 
-    /* ── MAIN ── */
+    /* MAIN */
     main {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
+      padding: 1.75rem 1.5rem 4rem;
     }
 
-    /* ── STATUS ── */
     #statusArea {
       text-align: center;
-      padding: 1rem 0;
+      padding: 0.75rem 0;
       font-size: 14px;
       color: var(--text-secondary);
     }
 
-    #statusArea.error { color: #b94040; }
+    #statusArea.error { color: #ff6b6b; }
 
     .spinner {
       display: inline-block;
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       border: 2px solid var(--border);
       border-top-color: var(--accent);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       vertical-align: middle;
-      margin-right: 8px;
+      margin-right: 7px;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .result-count {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-muted);
       margin-bottom: 1.25rem;
-      font-weight: 400;
     }
 
     .result-count strong {
-      color: var(--text-primary);
+      color: var(--accent);
       font-weight: 500;
     }
 
-    /* ── GRID ── */
+    /* GRID */
     .results-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
     }
 
-    /* ── CARD ── */
+    /* CARD */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -201,21 +218,19 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+      transition: border-color 0.2s, transform 0.2s;
     }
 
     .card:hover {
-      box-shadow: var(--shadow);
-      transform: translateY(-3px);
       border-color: var(--border-hover);
+      transform: translateY(-4px);
     }
 
     .card-img-wrap {
       width: 100%;
-      height: 180px;
+      height: 170px;
       overflow: hidden;
-      background: var(--accent-light);
-      position: relative;
+      background: var(--bg-card2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -229,7 +244,7 @@
       transition: transform 0.3s;
     }
 
-    .card:hover .card-img { transform: scale(1.04); }
+    .card:hover .card-img { transform: scale(1.05); }
 
     .card-img-placeholder {
       display: flex;
@@ -238,11 +253,11 @@
       gap: 8px;
     }
 
-    .card-img-placeholder svg { opacity: 0.35; }
-    .card-img-placeholder span { font-size: 11px; color: var(--accent); opacity: 0.6; letter-spacing: 0.05em; }
+    .card-img-placeholder svg { opacity: 0.25; }
+    .card-img-placeholder span { font-size: 11px; color: var(--text-muted); letter-spacing: 0.06em; }
 
     .card-body {
-      padding: 14px 16px 10px;
+      padding: 13px 15px 9px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -250,8 +265,7 @@
     }
 
     .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 600;
       color: var(--text-primary);
       line-height: 1.4;
@@ -262,7 +276,7 @@
     }
 
     .card-desc {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-secondary);
       line-height: 1.6;
       flex: 1;
@@ -274,26 +288,26 @@
     }
 
     .card-footer {
-      padding: 10px 16px 14px;
+      padding: 9px 15px 13px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-top: 1px solid var(--border);
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .card-year {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text-muted);
       font-weight: 500;
     }
 
     .card-link {
-      font-size: 12.5px;
-      font-weight: 500;
-      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 13px;
       border-radius: 999px;
-      background: var(--accent-light);
+      background: var(--accent2);
       color: var(--accent);
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
@@ -303,34 +317,31 @@
 
     .card-link:hover {
       background: var(--accent);
-      color: #fff;
+      color: #0d1117;
     }
 
-    /* ── EMPTY STATE ── */
+    /* STATES */
     .empty-state {
       text-align: center;
       padding: 4rem 1rem;
+      grid-column: 1 / -1;
     }
 
-    .empty-state svg { opacity: 0.2; margin-bottom: 1rem; }
-    .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text-primary); margin-bottom: 8px; }
-    .empty-state p { font-size: 14px; color: var(--text-muted); }
+    .empty-state svg { opacity: 0.15; margin-bottom: 1rem; }
+    .empty-state h3 { font-size: 18px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .empty-state p { font-size: 13.5px; color: var(--text-muted); }
 
-    /* ── WELCOME ── */
-    .welcome {
-      text-align: center;
-      padding: 4rem 1rem;
-    }
+    .welcome { text-align: center; padding: 3.5rem 1rem; }
+    .welcome p { font-size: 14px; color: var(--text-muted); font-weight: 300; }
+    .welcome strong { color: var(--accent); }
 
-    .welcome p { font-size: 15px; color: var(--text-muted); font-weight: 300; }
-
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 500px) {
-      header { padding: 2rem 1.25rem 1.5rem; }
-      .search-section { padding: 0 1.25rem 2rem; }
-      main { padding: 1.5rem 1rem 3rem; }
-      .results-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-      .card-img-wrap { height: 140px; }
+      header { padding: 1.75rem 1.25rem 1.5rem; }
+      .search-section { padding: 0 1.25rem 1.75rem; }
+      main { padding: 1.25rem 1rem 3rem; }
+      .results-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+      .card-img-wrap { height: 135px; }
     }
   </style>
 </head>
@@ -338,8 +349,8 @@
 
   <header>
     <p class="eyebrow">Open Library API</p>
-    <h1>Buscador de Eventos</h1>
-    <p>Explora libros, temas y autores como si fueran eventos de conocimiento</p>
+    <h1>Busca tu próximo <span>evento</span></h1>
+    <p>Explora títulos, temas y autores desde la biblioteca abierta más grande del mundo</p>
   </header>
 
   <section class="search-section">
@@ -357,17 +368,17 @@
   </main>
 
   <script>
-    const QUICK_TAGS = ["Historia", "Ciencia", "Arte", "Música", "Filosofía", "Tecnología", "Literatura", "Economía"];
-    const DEFAULT_PLACEHOLDER = `
+    const TAGS = ["Historia", "Ciencia", "Arte", "Música", "Filosofía", "Tecnología", "Literatura", "Economía"];
+    const PLACEHOLDER = `
       <div class="card-img-placeholder">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c4602a" stroke-width="1.5">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00d4aa" stroke-width="1.3">
           <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
         </svg>
         <span>Sin imagen</span>
       </div>`;
 
     const tagsRow = document.getElementById("tagsRow");
-    QUICK_TAGS.forEach(t => {
+    TAGS.forEach(t => {
       const btn = document.createElement("button");
       btn.className = "tag";
       btn.textContent = t;
@@ -405,27 +416,23 @@
 
         if (!data.docs || data.docs.length === 0) {
           grid.innerHTML = `
-            <div class="empty-state" style="grid-column:1/-1">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a1714" stroke-width="1.5">
+            <div class="empty-state">
+              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#e8f4f0" stroke-width="1.3">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
               </svg>
               <h3>Sin resultados</h3>
-              <p>No se encontraron resultados para "<strong>${escHtml(query)}</strong>". Intenta con otro término.</p>
+              <p>No encontramos resultados para "<strong>${escHtml(query)}</strong>". Intenta otro término.</p>
             </div>`;
           btn.disabled = false;
           return;
         }
 
-        countEl.innerHTML = `<p class="result-count"><strong>${data.numFound.toLocaleString()}</strong> resultados encontrados — mostrando ${data.docs.length}</p>`;
+        countEl.innerHTML = `<p class="result-count"><strong>${data.numFound.toLocaleString()}</strong> resultados — mostrando ${data.docs.length}</p>`;
         renderCards(data.docs);
 
       } catch (err) {
         status.className = "error";
-        status.innerHTML = `
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-          </svg>
-          No se pudo conectar con Open Library. Verifica tu conexión e intenta de nuevo.`;
+        status.innerHTML = `No se pudo conectar con Open Library. Verifica tu conexión e intenta de nuevo.`;
       }
 
       btn.disabled = false;
@@ -433,22 +440,21 @@
 
     function renderCards(docs) {
       const grid = document.getElementById("resultsGrid");
-
       docs.forEach(doc => {
         const title = doc.title || "Sin título";
-        const year = doc.first_publish_year || "Fecha desconocida";
+        const year = doc.first_publish_year || "—";
         const desc = getDesc(doc.first_sentence);
         const url = doc.key ? `https://openlibrary.org${doc.key}` : "#";
 
+        const imgSection = doc.cover_i
+          ? `<img class="card-img"
+               src="https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg"
+               alt="${escHtml(title)}" loading="lazy"
+               onerror="this.parentElement.innerHTML='${PLACEHOLDER.replace(/'/g, "&#39;")}'"/>`
+          : PLACEHOLDER;
+
         const card = document.createElement("div");
         card.className = "card";
-
-        const imgSection = doc.cover_i
-          ? `<img class="card-img" src="https://covers.openlibrary.org/b/id/${doc.cover_i}-M.jpg"
-               alt="${escHtml(title)}" loading="lazy"
-               onerror="this.parentElement.innerHTML='${DEFAULT_PLACEHOLDER.replace(/'/g,"&#39;")}'" />`
-          : DEFAULT_PLACEHOLDER;
-
         card.innerHTML = `
           <div class="card-img-wrap">${imgSection}</div>
           <div class="card-body">
@@ -460,7 +466,6 @@
             <a class="card-link" href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">Ver más</a>
           </div>
         `;
-
         grid.appendChild(card);
       });
     }
@@ -468,8 +473,7 @@
     function getDesc(raw) {
       if (!raw) return "Descripción no disponible.";
       if (typeof raw === "string") return raw;
-      if (raw.value) return raw.value;
-      return "Descripción no disponible.";
+      return raw.value || "Descripción no disponible.";
     }
 
     function escHtml(s) {
@@ -480,9 +484,8 @@
         .replace(/"/g, "&quot;");
     }
 
-    // welcome state
     document.getElementById("statusArea").innerHTML =
-      `<div class="welcome"><p>Escribe un término en el buscador y presiona <strong>Buscar</strong> para explorar</p></div>`;
+      `<div class="welcome"><p>Escribe un término y presiona <strong>Buscar</strong> para explorar</p></div>`;
   </script>
 </body>
 </html>
